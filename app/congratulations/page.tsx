@@ -1,44 +1,18 @@
 "use client"
 
-import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import LanguageSelector from "@/components/LanguageSelector"
+import { useTranslation } from "../../contexts/TranslationContext"
 
 export default function Congratulations() {
-  useEffect(() => {
-    // Adiciona o script do Google Translate
-    const addScript = () => {
-      if (document.getElementById("google-translate-script")) return
-      const script = document.createElement("script")
-      script.id = "google-translate-script"
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      document.body.appendChild(script)
-    }
-
-    // Função global exigida pelo Google Translate
-    window.googleTranslateElementInit = function () {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "pt",
-          includedLanguages: "en,es,fr,nl,de,it,pt",
-          autoDisplay: true,
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        "google-translate-ball"
-      )
-    }
-
-    addScript()
-  }, [])
+  const { t } = useTranslation()
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-4">
-      {/* Círculo de tradução customizado */}
+      {/* Seletor de idioma */}
       <div className="absolute top-6 right-6 z-[1000]">
-        <div id="google-translate-ball" className="google-translate-ball flex items-center justify-center">
-          {/* Google SVG */}
-         
-        </div>
+        <LanguageSelector />
       </div>
       
       <div className="bg-white/10 rounded-xl shadow-xl p-12 flex flex-col items-center">

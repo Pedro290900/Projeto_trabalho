@@ -7,6 +7,8 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useTranslation } from "../contexts/TranslationContext"
+import LanguageSelector from "@/components/LanguageSelector"
 import {
   Star,
   Users,
@@ -31,8 +33,11 @@ import { LogoGallery } from "@/components/logo-gallery"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" },
+  animate: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  },
 }
 
 const staggerContainer = {
@@ -184,6 +189,7 @@ const faqs = [
 ]
 
 export default function LogoLandingPage() {
+  const { t } = useTranslation()
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showCheckout, setShowCheckout] = useState(false)
@@ -198,27 +204,6 @@ export default function LogoLandingPage() {
     return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    const addScript = () => {
-      if (document.getElementById("google-translate-script")) return
-      const script = document.createElement("script")
-      script.id = "google-translate-script"
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      document.body.appendChild(script)
-    }
-    window.googleTranslateElementInit = function () {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "pt",
-          includedLanguages: "en,es,fr,nl,de,it,pt",
-          autoDisplay: true,
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        "google-translate-ball"
-      )
-    }
-    addScript()
-  }, [])
   const handleBuyNow = (pkg: any) => {
   setSelectedPackage(pkg)
   setShowCheckout(true)
@@ -270,13 +255,8 @@ export default function LogoLandingPage() {
       </div>
 
       <div className="absolute top-6 right-6 z-[1000]">
-  <div id="google-translate-ball" className="google-translate-ball flex items-center justify-center">
-    {/* Ícone Google SVG */}
-    <span className="google-icon" aria-label="Google Translate">
-    
-    </span>
-  </div>
-</div>
+        <LanguageSelector />
+      </div>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
@@ -313,11 +293,7 @@ export default function LogoLandingPage() {
 
           {/* Main Headline */}
           <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Invista em qualidade e estratégia. Transforme sua identidade visual com um{" "}
-            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-              designer profissional
-            </span>{" "}
-            especializado em criação de logotipos que realmente entregam resultados.
+            {t('hero.title')}
           </motion.h1>
 
           {/* CTA Badges */}
