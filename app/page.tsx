@@ -57,7 +57,7 @@ export default function Home() {
   const packages = [
     {
       name: t('packages.iaStart.name'),
-      price: "€0,09",
+      price: "€10,02",
       originalPrice: "€49,99",
       description: t('packages.iaStart.description'),
       features: Array.isArray(t('packages.iaStart.features')) ? t('packages.iaStart.features') as string[] : [],
